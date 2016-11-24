@@ -48,12 +48,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="libpxcclr.cs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\libpxcclr.cs.1.0.0.0\lib\net40\libpxcclr.cs.dll</HintPath>
+    <Reference Include="libpxcclr.cs, Version=10.0.26.396, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\libpxcclr.cs.10.0.26.397\lib\net40\libpxcclr.cs.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,18 +66,31 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Camera.cs" />
-    <Compile Include="CameraExtensions.cs" />
+    <Compile Include="Capabilities\Capability.cs" />
+    <Compile Include="Capabilities\FacialExpressionCapability.cs" />
+    <Compile Include="Capabilities\FaceCapability.cs" />
+    <Compile Include="Capabilities\FaceRecognitionCapability.cs" />
+    <Compile Include="Capabilities\FingerTrackingCapability.cs" />
+    <Compile Include="Capabilities\GesturesCapability.cs" />
+    <Compile Include="Capabilities\ImageStreamCapability.cs" />
+    <Compile Include="Capabilities\LoopObjects.cs" />
+    <Compile Include="Capabilities\SegmentationStreamCapability.cs" />
     <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="Capabilities\ICapability.cs" />
+    <Compile Include="Errors.cs" />
     <Compile Include="LanguageNotSupportedException.cs" />
+    <Compile Include="Capabilities\HandTrackingCapability.cs" />
     <Compile Include="RealSenseAssembliesLoader.cs" />
     <Compile Include="RealSenseCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealSenseAudioPlayer.cs" />
-    <Compile Include="Speech.cs" />
-    <Compile Include="SpeechRecognition.cs" />
-    <Compile Include="SpeechSynthesis.cs" />
+    <Compile Include="Speech\RealSenseAudioPlayer.cs" />
+    <Compile Include="RecognitionState.cs" />
+    <Compile Include="Speech\SpeechManager.cs" />
+    <Compile Include="Speech\SpeechRecognition.cs" />
+    <Compile Include="Speech\SpeechSynthesis.cs" />
     <Compile Include="Storage\UserIdRepository.cs" />
-    <Compile Include="SupportedLanguageMapper.cs" />
+    <Compile Include="Speech\SupportedLanguageMapper.cs" />
+    <Compile Include="Util\Point3dExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="x32\libpxccpp2c.dll" />

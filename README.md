@@ -1,20 +1,17 @@
-SharpSenses
-==============
+<p align="center">
+  <img src="https://raw.githubusercontent.com/SharpSenses/logos/master/sharp_senses.png" width="350px" alt="SharpSenses" />
+</p>
+<p>
+An easier way to use the **RealSense** SDK! Custom poses, gestures and much more.
 
-An easier way to use **Intel 3d Cameras**. It works with both **Perceptual** (2013) and **RealSense** (2014) SDKs! Custom poses, gestures and much more.
-
-*Warning*: This is not ready for production, I'm changing the SDK (breaking changes sometimes) while I add new features, so stay tuned for version 1.0.
-
-## SharpSenses.Perceptual
->  Nuget: Install-Package SharpSenses.Perceptual
-
+<sub>***Warning:*** *Make sure you have the RealSense SDK version 10 installed before using SharpSenses. This is not ready for production, I'm changing the SDK (breaking changes sometimes) while I add new features, so stay tuned for version 1.0.*</sub>
 
 ## SharpSenses.RealSense
 > Nuget: Install-Package SharpSenses.RealSense
 
 ## Sample:
 ```
-    ICamera cam = Camera.Create(); //autodiscovers your sdk (perceptual or realsense)
+    var cam = Camera.Create(Capability.HandTracking);
     cam.LeftHand.Visible += (s,a) => Console.WriteLine("Hi left hand!");
     cam.RightHand.Closed += (s,a) => Console.WriteLine("Hand Closed");
     cam.RightHand.Moved += (s,a) => {
@@ -22,6 +19,31 @@ An easier way to use **Intel 3d Cameras**. It works with both **Perceptual** (20
     }
     cam.Start();
 ````
+
+## Enabling Capabilities
+
+For performance reasons, you have to tell the camera which modules will be loaded for use.
+The available modules are:
+
+- HandTracking,
+- FingersTracking,
+- GestureTracking,
+- FaceTracking,
+- FaceRecognition,
+- FacialExpressionTracking,
+- ImageStreamTracking,
+- SegmentationStreamTracking 
+
+You can enable the modules when creating the Camera object or calling the method "AddCapability", always before calling "Start".
+
+```
+    var cam = Camera.Create(Capability.HandTracking, Capability.FingersTracking);
+    or
+    cam.AddCapability(Capability.FaceTracking);
+```
+
+# Examples:
+
 ##Gestures
 
 ```
@@ -29,13 +51,43 @@ An easier way to use **Intel 3d Cameras**. It works with both **Perceptual** (20
     cam.Gestures.SlideRight += (s, a) => Console.WriteLine("Swipe Right");
     cam.Gestures.SlideUp += (s, a) => Console.WriteLine("Swipe Up");
     cam.Gestures.SlideDown += (s, a) => Console.WriteLine("Swipe Down");
-    cam.Gestures.MoveForward += (s, a) => Console.WriteLine("Move Forward");
 ```
 
 ##Poses
 ```
-    cam.Poses.PeaceBegin += hand => Console.WriteLine("Make love, not war");
-    cam.Poses.PeaceEnd += hand => Console.WriteLine("Bye!");
+    cam.Poses.PeaceBegin += (s, a) => Console.WriteLine("Make love, not war");
+    cam.Poses.PeaceEnd += (s, a) => Console.WriteLine("Bye!");
+```
+
+##Eyes
+```
+    cam.Face.LeftEye.Blink += (sender, eventArgs) => {
+        Console.WriteLine("Blink");
+    };
+    cam.Face.LeftEye.DoubleBlink += (sender, eventArgs) => {
+        Console.WriteLine("Double Blink");
+    };
+    cam.Face.WinkedLeft += (sender, eventArgs) => {
+        Console.WriteLine("WinkedLeft");
+    };
+    cam.Face.WinkedRight += (sender, eventArgs) => {
+        Console.WriteLine("WinkedRight");
+    };
+```
+
+##Mouth
+```
+    cam.Face.Mouth.Opened += (s, a) => {
+        Console.WriteLine("-> Mouth opened");
+    };
+
+    cam.Face.Mouth.Closed += (s, a) => {
+        Console.WriteLine("-> Mouth closed");
+    };
+
+    cam.Face.Mouth.Smiled += (s, a) => {
+        Console.WriteLine("-> Mouth smiled");
+    };
 ```
 
 ##Custom Poses
@@ -57,11 +109,7 @@ An easier way to use **Intel 3d Cameras**. It works with both **Perceptual** (20
 - Sadness
 - Surprise
 
-```
-    cam.Face.FacialExpresssionChanged += (s, e) => {
-        Console.WriteLine("FacialExpression: " + e.NewFacialExpression);
-    }
-```
+OBS: Unfortunately this feature was deprecated by Intel
 
 ##Face Recognition
 
@@ -94,4 +142,4 @@ I can hear you, man!
     cam.Speech.EnableRecognition();
 ```
 
-Don't forget that you have to have the Intel RealSense SDK (and the 3d camera, of course) for this library to work!
+Don't forget that you have to have the Intel RealSense SDK v10 (and the 3d camera, of course) for this library to work!

@@ -12,6 +12,8 @@ namespace SharpSenses {
         IGestureSensor Gestures { get; }
         IPoseSensor Poses { get; }
         ISpeech Speech { get; }
+        ImageStream ImageStream { get; }
+        ImageStream SegmentationStream { get; }
         void Start();
     }
 }
